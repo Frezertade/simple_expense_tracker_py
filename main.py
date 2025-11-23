@@ -20,7 +20,8 @@ def menu():
         print(Fore.YELLOW +"6) Total of all expenses" + Style.RESET_ALL)
         print(Fore.YELLOW +"7) Total by category" + Style.RESET_ALL)
         print(Fore.YELLOW +"8) Most expensive expense" + Style.RESET_ALL)
-        print(Fore.RED +"9) Exit" + Style.RESET_ALL)
+        print(Fore.YELLOW + "9) Plot by category" + Style.RESET_ALL)
+        print(Fore.RED +"10) Exit" + Style.RESET_ALL)
 
         choice = input("Enter choice: ")
 
@@ -72,6 +73,9 @@ def menu():
                     print(f"Most expensive: {description} (Category: {category}, Amount: ${amount:.2f}, Date: {date})")
 
             case "9":
+                expenseRepository.plot_by_category()
+
+            case "10":
                 expenseRepository.save_data()
                 print("Goodbye!")
                 break

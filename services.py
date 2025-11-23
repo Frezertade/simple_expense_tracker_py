@@ -122,7 +122,6 @@ class ExpenseRepository():
            plt.title("Expenses by category")
            plt.xlabel("Category")
            plt.ylabel("Amount")
-           plt.style.use('seaborn')
            plt.show()
         else:
            print("No expenses recorded yet.")
