@@ -2,7 +2,7 @@ import datetime
 import os
 from Models import Expense
 import json
-
+import matplotlib.pyplot as plt
 
 class ExpenseRepository():
     EXPENSE_FILE_NAME = "expenses.json"
@@ -50,6 +50,15 @@ class ExpenseRepository():
             print(e)
             return []
 
+    def aggregate_by_category(self):
+        # Hint: Initialize an empty dictionary.
+        category_totals = dict()
+        for expense in self.expenses:
+            if expense.category in category_totals.keys():
+                category_totals[expense.category] += expense.amount
+            else:
+                category_totals[expense.category] = expense.amount
+        return category_totals
 
     def print_expenses(self):
         for r in self.expenses:
@@ -100,3 +109,22 @@ class ExpenseRepository():
             max = expense.amount
             maxExpense = expense
       return maxExpense.description, maxExpense.amount, maxExpense.category, maxExpense.date
+
+
+    def plot_by_category(self):
+        category_totals = self.aggregate_by_category()
+        if category_totals:
+           categories = list(category_totals.keys())
+           amounts = list(category_totals.values())
+
+           # plot
+           plt.bar(categories, amounts, align='center')
+           plt.title("Expenses by category")
+           plt.xlabel("Category")
+           plt.ylabel("Amount")
+           plt.style.use('seaborn')
+           plt.show()
+        else:
+           print("No expenses recorded yet.")
+
+
