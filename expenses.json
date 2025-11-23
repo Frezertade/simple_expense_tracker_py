@@ -1,0 +1,20 @@
+[
+    {
+        "category": "Food",
+        "description": "food with freinds",
+        "date": "2025-11-23",
+        "amount": 30.0
+    },
+    {
+        "category": "Flight ",
+        "description": "Flight ",
+        "date": "2025-11-23",
+        "amount": 50.0
+    },
+    {
+        "category": "Church",
+        "description": "tithe",
+        "date": "2025-11-23",
+        "amount": 1290.0
+    }
+]

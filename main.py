@@ -1,11 +1,10 @@
 from datetime import datetime
-from pydoc import describe
-
 from colorama import Fore, Style
 import os
 
-from services import add_expense, print_expenses, search_by_category, search_by_date, search_by_amount_range, most_expenses, expenses, total_expenses, total_expenses_category
+from services  import ExpenseRepository
 
+expenseRepository = ExpenseRepository()
 
 def menu():
     while True:
@@ -27,40 +26,45 @@ def menu():
 
         match choice:
             case "1":
-                add_expense()
+                expenseRepository.add_expense()
 
             case "2":
-                print_expenses()
+                expenseRepository.print_expenses()
 
             case "3":
                 cat = input("Enter category: ")
-                results = search_by_category(cat)
+                results = expenseRepository.search_by_category(cat)
                 for r in results:
                     print(f"Description: {r.description} | Amount: ${r.amount:.2f} | Category: {r.category} | Date: {r.date}")
 
             case "4":
                 mn = float(input("Min amount: "))
                 mx = float(input("Max amount: "))
-                results = search_by_amount_range(mn, mx)
+                results = expenseRepository.search_by_amount_range(mn, mx)
                 for r in results:
                     print(f"Description: {r.description} | Amount: ${r.amount:.2f} | Category: {r.category} | Date: {r.date}")
 
             case "5":
-                date_input = input("Enter date (YYYY-MM-DD): ")
-                target_date = datetime.strptime(date_input, "%Y-%m-%d").date()
-                results = search_by_date(target_date)
+                while True:
+                    try:
+                      date_input = input("Enter date (YYYY-MM-DD): ")
+                      target_date = datetime.strptime(date_input, "%Y-%m-%d").date()
+                      break
+                    except ValueError:
+                        print("Invalid date. Try again")
+                results = expenseRepository.search_by_date(target_date)
                 for r in results:
                     print(f"Description: {r.description} | Amount: ${r.amount:.2f} | Category: {r.category} | Date: {r.date}")
 
             case "6":
-                print("Total:", total_expenses(expenses))
+                print("Total:", expenseRepository.total_expenses())
 
             case "7":
                 cat = input("Enter category: ")
-                print("Total:", total_expenses_category(cat))
+                print("Total:", expenseRepository.total_expenses_category(cat))
 
             case "8":
-                result = most_expenses(expenses)
+                result = expenseRepository.most_expenses()
                 if isinstance(result, str):
                    print("Most expensive:", result)
                 else:
@@ -68,6 +72,7 @@ def menu():
                     print(f"Most expensive: {description} (Category: {category}, Amount: ${amount:.2f}, Date: {date})")
 
             case "9":
+                expenseRepository.save_data()
                 print("Goodbye!")
                 break
 
